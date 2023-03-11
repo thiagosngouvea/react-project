@@ -5,18 +5,15 @@ interface BattleCardProps {
   name: string;
   description: string;
   imageUrl: string;
+  value?: number;
 }
 
 const Card: React.FC<BattleCardProps> = ({
   name,
   description,
   imageUrl,
+  value = getRandomNumber(1, 10),
 }) => {
-  const [value, setValue] = useState<number>(getRandomNumber(1, 10));
-
-  const handleButtonClick = () => {
-    setValue(getRandomNumber(1, 10));
-  };
 
   return (
     <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800">

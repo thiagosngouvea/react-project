@@ -9,6 +9,7 @@ interface Character {
     name: string;
     gender: string;
     image: string;
+    value: number;
 }
 
 
@@ -18,7 +19,6 @@ export default function CardPage() {
     const router = useRouter();
     const { name } = router.query;
 
-    //generate a array with five random numbers
     const generateRandomNumbers = () => {
         const randomNumbers: number[] = [];
         while (randomNumbers.length < 5) {
@@ -33,7 +33,15 @@ export default function CardPage() {
     const getFiveRandomCharacters = async () => {
         try {
             const response = await getRandomCharacters(generateRandomNumbers());
-            setCharacters(response);
+            const characters = response.map((character: any) => {
+                return {
+                    name: character.name,
+                    gender: character.gender,
+                    image: character.image,
+                    value: getRandomNumber(1, 10),
+                };
+                });
+            setCharacters(characters);
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +50,15 @@ export default function CardPage() {
     const getRandomCharacter = async () => {
         try {
             const response = await getRandomCharacters([getRandomNumber(1, 826)]);
-            setCharacters([...characters, response]);
+            const randomCharacter = response.map((character: any) => {
+                return {
+                    name: character.name,
+                    gender: character.gender,
+                    image: character.image,
+                    value: getRandomNumber(1, 10),
+                };
+                });
+            setCharacters([...characters, randomCharacter]);
         } catch (error) {
             console.log(error);
         }
@@ -59,7 +75,8 @@ export default function CardPage() {
           [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
         }
         return shuffledArray;
-      }
+    }
+
 
     const shuffleCharacters = () => {
         setCharacters(shuffleArray(characters));
@@ -90,6 +107,7 @@ export default function CardPage() {
                         name={character.name}
                         description={character.gender}
                         imageUrl={character.image}
+                        value={character.value}
                         />  
                         ))}
                 </div>
