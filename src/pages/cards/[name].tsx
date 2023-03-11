@@ -14,6 +14,7 @@ interface Character {
 
 export default function CardPage() {
     const [characters, setCharacters] = useState<Character[]>([]);
+    const [scroll, setScroll] = useState<Boolean>(false);
     const router = useRouter();
     const { name } = router.query;
 
@@ -63,9 +64,21 @@ export default function CardPage() {
     const shuffleCharacters = () => {
         setCharacters(shuffleArray(characters));
     };
+    
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setScroll(true);
+            } else {
+                setScroll(false);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
-        <div className="h-screen"> 
+        <div className={`${scroll ? "h-full" : "h-screen"} bg-gray-50 dark:bg-gray-900`}> 
             <div className="grid">
                 <h1 className="grid justify-end text-3xl font-bold text-gray-600 p-4">{name}</h1>
             </div>
@@ -82,7 +95,7 @@ export default function CardPage() {
                 </div>
                 <div className="flex justify-center mt-2">
                     <Button
-                        className="mr-2"
+                        className={characters.length >= 8 ? "cursor-not-allowed bg-gray-400 mr-2" : "bg-blue-500 hover:bg-blue-600 mr-2"}
                         type="button"
                         disabled={characters.length >= 8}
                         onClick={getRandomCharacter}
@@ -90,6 +103,7 @@ export default function CardPage() {
                         {characters.length >= 8 ? "Limite de cartas atingido" : "Puxar Carta"}
                     </Button>
                     <Button
+                        className="bg-blue-500 hover:bg-blue-600"
                         type="button"
                         onClick={() => shuffleCharacters()}
                     >
