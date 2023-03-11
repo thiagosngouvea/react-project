@@ -50,14 +50,12 @@ export default function CardPage() {
     const getRandomCharacter = async () => {
         try {
             const response = await getRandomCharacters([getRandomNumber(1, 826)]);
-            const randomCharacter = response.map((character: any) => {
-                return {
-                    name: character.name,
-                    gender: character.gender,
-                    image: character.image,
-                    value: getRandomNumber(1, 10),
-                };
-                });
+            const randomCharacter = {
+                name: response.name,
+                gender: response.gender,
+                image: response.image,
+                value: getRandomNumber(1, 10),
+            };
             setCharacters([...characters, randomCharacter]);
         } catch (error) {
             console.log(error);
