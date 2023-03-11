@@ -22,16 +22,10 @@ const Card: React.FC<BattleCardProps> = ({
     <div className="max-w-xs rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800">
       <img className="w-full h-48 object-cover" src={imageUrl} alt={name} />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{name}</div>
-        <p className="text-gray-700 text-base">{description}</p>
-        <div className="flex items-center justify-between mt-4">
-          <div className="font-bold text-lg">{value}</div>
-          {/* <button
-            className="px-3 py-1 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600"
-            onClick={handleButtonClick}
-          >
-            Atacar
-          </button> */}
+        <div className="text-gray-600 font-bold text-xl mb-2 h-16">{name}</div>
+        <p className="text-gray-700 text-base font-medium justify-center grid">{description}</p>
+        <div className="flex items-center justify-center mt-4">
+          <div className={`font-bold text-4xl ${value < 6 ? 'text-red-500' : value >= 6 && value <= 8 ? 'text-orange-500' : 'text-green-500'}`}>{value}</div>
         </div>
       </div>
     </div>
